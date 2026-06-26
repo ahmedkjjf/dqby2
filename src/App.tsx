@@ -144,6 +144,10 @@ _G = {
   const [copiedText, setCopiedText] = useState<{ [key: string]: boolean }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
+  
+  // Custom AI Gateway States for Netlify and direct key configuration
+  const [customBackendUrl, setCustomBackendUrl] = useState(() => localStorage.getItem('alzaabi_custom_backend') || '');
+  const [customApiKey, setCustomApiKey] = useState(() => localStorage.getItem('alzaabi_custom_api_key') || '');
 
   // Custom Alzaabi Sovereign Admin Encryptor States
   const [adminEncryptionInput, setAdminEncryptionInput] = useState('');
@@ -3715,7 +3719,107 @@ end)
                   <p className="text-[8px] text-[#00ff00]/40 uppercase animate-pulse">Scanning Bytecode & Reconstructing Functions</p>
                 </div>
               </motion.section>
-            ) : null}
+            ) : (
+              <motion.section
+                key="empty-analysis-view"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="space-y-6"
+              >
+                {/* Main Trigger Card */}
+                <div className="bg-black/60 border border-[#00ff00]/20 p-8 flex flex-col items-center justify-center text-center relative overflow-hidden backdrop-blur-md">
+                  <div className="absolute inset-0 bg-green-500/[0.02] pointer-events-none" />
+                  <div className="w-16 h-16 border border-green-500/30 bg-green-500/10 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,255,0,0.1)]">
+                    <BrainCircuit className="w-8 h-8 text-[#00ff00]" />
+                  </div>
+                  
+                  <h3 className="text-xl font-black text-[#00ff00] uppercase tracking-wider mb-2">
+                    فك التشفير الكامل بالذكاء الاصطناعي // AI_FULL_DECODE
+                  </h3>
+                  <p className="text-xs text-[#00ff00]/70 max-w-lg mb-8 leading-relaxed">
+                    باستخدام خلايا الذكاء الاصطناعي المتقدمة، يمكنك تحليل كود التشويش المعقد واسترجاع المنطق البرمجي الأصلي، وإعادة هيكلة المتغيرات والملفات بدقة كاملة 100%.
+                  </p>
+
+                  <button
+                    onClick={handleAiAnalyze}
+                    className="px-12 py-4 bg-[#00ff00] text-black font-black uppercase tracking-widest hover:bg-[#00ff00]/80 transition-all shadow-[0_0_30px_rgba(0,255,0,0.3)] flex items-center gap-3 text-sm rounded-[2px]"
+                  >
+                    <Cpu className="w-5 h-5 animate-pulse" />
+                    بدء استخلاص كود المصدر الأصلي بالذكاء الاصطناعي
+                  </button>
+                </div>
+
+                {/* Gateway Configuration Panel */}
+                <div className="bg-black/80 border border-[#00ff00]/20 p-6 backdrop-blur-md relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-[#00ff00]/60" />
+                  <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-[#00ff00]/60" />
+                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-[#00ff00]/60" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-[#00ff00]/60" />
+
+                  <h4 className="text-xs font-black text-[#00ff00] uppercase tracking-widest mb-4 flex items-center justify-between flex-row-reverse border-b border-[#00ff00]/10 pb-3">
+                    <div className="flex items-center gap-2">
+                      <KeyRound className="w-4 h-4" /> بوابة الذكاء الاصطناعي والربط السحابي (AI Gateway Settings)
+                    </div>
+                    <span className="text-[9px] text-[#00ff00]/40 font-mono">CONNECTION_ROUTE_V2</span>
+                  </h4>
+
+                  <div className="text-[11px] text-yellow-500/80 mb-6 bg-yellow-500/5 border border-yellow-500/20 p-4 text-right leading-relaxed flex flex-col gap-1">
+                    <span className="font-bold">⚠️ تنبيه لبيئات الاستضافة الساكنة (مثل Netlify):</span>
+                    <span>إذا كنت تستضيف الموقع على Netlify، فلن تتمكن من الوصول للسيرفر الداخلي مباشرة. يرجى تكوين خادم سحابي مخصص أدناه (مثل رابط Cloud Run) أو استخدام مفتاح API المباشر لتشغيل الفك الذكي بنجاح وبدون مشاكل!</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Custom Backend Proxy URL */}
+                    <div className="space-y-2 text-right">
+                      <label className="text-[10px] text-[#00ff00]/60 uppercase font-black block">رابط السيرفر المخصص (Custom Backend URL)</label>
+                      <input
+                        type="url"
+                        value={customBackendUrl}
+                        onChange={(e) => setCustomBackendUrl(e.target.value)}
+                        placeholder="https://ais-dev-...run.app"
+                        className="w-full bg-black/80 border border-[#00ff00]/20 p-3 text-xs text-[#00ff00] font-mono outline-none focus:border-[#00ff00] transition-colors"
+                      />
+                      <p className="text-[9px] text-[#00ff00]/40">رابط خادم Cloud Run أو أي خادم وكيل يدعم معالجة البث.</p>
+                    </div>
+
+                    {/* Direct Gemini API Key */}
+                    <div className="space-y-2 text-right">
+                      <label className="text-[10px] text-[#00ff00]/60 uppercase font-black block">مفتاح Gemini API المباشر (Direct Gemini API Key)</label>
+                      <input
+                        type="password"
+                        value={customApiKey}
+                        onChange={(e) => setCustomApiKey(e.target.value)}
+                        placeholder={customApiKey ? "••••••••••••••••••••••••••••••••" : "AIzaSy..."}
+                        className="w-full bg-black/80 border border-[#00ff00]/20 p-3 text-xs text-[#00ff00] font-mono outline-none focus:border-[#00ff00] transition-colors"
+                      />
+                      <p className="text-[9px] text-[#00ff00]/40">استخدم مفتاحك الخاص لتشغيل فك التشفير مباشرة من المتصفح 100%.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex justify-between items-center border-t border-[#00ff00]/10 pt-4 flex-row-reverse">
+                    <button
+                      onClick={() => {
+                        localStorage.setItem('alzaabi_custom_backend', customBackendUrl);
+                        localStorage.setItem('alzaabi_custom_api_key', customApiKey);
+                        setStatus('تم حفظ بوابة الربط بنجاح');
+                        addLog('AI_GATEWAY_CONFIG_SAVED', 'success');
+                      }}
+                      className="px-8 py-2.5 bg-green-500/10 border border-green-500/50 text-[#00ff00] text-xs font-bold hover:bg-[#00ff00] hover:text-black transition-all rounded-[2px]"
+                    >
+                      حفظ التغييرات (Save Configuration)
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                      <div className={`w-2.5 h-2.5 rounded-full ${customApiKey ? 'bg-blue-500 animate-pulse' : customBackendUrl ? 'bg-[#00ff00] animate-pulse' : 'bg-yellow-500 animate-pulse'}`} />
+                      <span className="text-[10px] text-[#00ff00]/60 font-mono font-bold uppercase">
+                        Route: {customApiKey ? 'Direct Gemini REST' : customBackendUrl ? 'Custom Cloud Run Backend' : 'Default Cloud Run Instance'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.section>
+            )}
           </AnimatePresence>
         </motion.div>
       )}
