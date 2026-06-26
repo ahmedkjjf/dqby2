@@ -340,7 +340,7 @@ _G = {
       
       // If server returned status !== 200/not JSON (such as static server redirecting payload on Netlify), trigger fallback validation
       if (!resp.ok || !resp.headers.get('content-type')?.includes('application/json')) {
-        const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6KP_ga18_bpT2Wy3e9LFRQTljjTKqZkN9mEcwdgTf0lfA"];
+        const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ"];
         if (fallbackKeys.includes(adminCodeInput)) {
           setIsAdminAuthenticated(true);
           sessionStorage.setItem('alzaabi_admin_auth', 'true');
@@ -390,7 +390,7 @@ _G = {
       }
     } catch (e) {
       // Catch exceptions (network fails, fetch throws block on Netlify) and test fallback keys
-      const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6KP_ga18_bpT2Wy3e9LFRQTljjTKqZkN9mEcwdgTf0lfA"];
+      const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ"];
       if (fallbackKeys.includes(adminCodeInput)) {
         setIsAdminAuthenticated(true);
         sessionStorage.setItem('alzaabi_admin_auth', 'true');
@@ -926,7 +926,7 @@ _G = {
       try {
         const urlParams = new URL(window.location.href).searchParams;
         const key = urlParams.get('sec_key') || urlParams.get('key');
-        const bypassKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6KP_ga18_bpT2Wy3e9LFRQTljjTKqZkN9mEcwdgTf0lfA"];
+        const bypassKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ"];
         if (key && bypassKeys.includes(key)) {
           localStorage.setItem('alzaabi_bypass_active', 'true');
           return true;
