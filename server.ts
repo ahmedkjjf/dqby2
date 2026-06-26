@@ -127,7 +127,7 @@ async function startServer() {
 
   app.post("/api/admin/verify", (req, res) => {
     const { code } = req.body;
-    const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6KP_ga18_bpT2Wy3e9LFRQTljjTKqZkN9mEcwdgTf0lfA"];
+    const fallbackKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ"];
     if (code === currentAdminCode || fallbackKeys.includes(code)) {
       // In a real app, generate a JWT. For this, we'll return success.
       return res.json({ success: true, token: "alzaabi_root_v5_" + Date.now() });
