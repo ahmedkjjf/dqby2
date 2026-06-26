@@ -344,6 +344,7 @@ export function validateEnvironment(): boolean {
   // Allow all sandbox, development, proxy and testing previews, including Cloud Run, Netlify, Vercel, Firebase
   if (
     currentHost.includes('run.app') || 
+    currentHost.includes('onrender.com') || 
     currentHost.includes('web.app') || 
     currentHost.includes('netlify.app') || 
     currentHost.includes('vercel.app') || 
