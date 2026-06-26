@@ -9,7 +9,7 @@ dotenv.config();
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = parseInt(process.env.PORT || "3000", 10);
 
   // Block automated scrapers and website downloaders (e.g. HTTrack, Wget, Curl, Cyotek)
   app.use(blockWebsiteDownloaders);
@@ -138,11 +138,20 @@ async function startServer() {
   // Secure Server-side Gemini Stream Proxy
   app.post("/api/gemini/stream", async (req, res) => {
     try {
-      const { code, originalCode, type, task } = req.body;
-      const apiKey = process.env.GEMINI_API_KEY;
+      const { code, originalCode, type, task, customApiKey } = req.body;
+      let apiKey = customApiKey || process.env.GEMINI_API_KEY;
+
+      // Anti-confusion check: If the API key starts with AQ. or matches the user's admin bypass key,
+      // override it because AQ. is a security/bypass token and cannot be used as a Gemini API Key.
+      if (apiKey && (apiKey.startsWith("AQ.") || apiKey === "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ")) {
+        console.warn("[AI Warning] GEMINI_API_KEY is configured with an admin security/bypass code instead of a valid Gemini API Key (AIzaSy...).");
+        apiKey = undefined;
+      }
 
       if (!apiKey) {
-        return res.status(500).json({ error: "GEMINI_API_KEY is not configured on the server. Please add it in project secrets." });
+        return res.status(400).json({ 
+          error: "مفتاح Gemini API غير مكوّن بشكل صحيح. يرجى تزويد مفتاح Gemini API صالح يبدأ بـ (AIzaSy) من خلال إدخاله في لوحة الإعدادات بالأسفل أو إعدادات المشروع (Secrets)." 
+        });
       }
 
       const ai = new GoogleGenAI({ apiKey });
