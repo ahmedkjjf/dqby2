@@ -20,7 +20,7 @@ export function sanitizeRequestHeaders(headers: Record<string, any>): Record<str
   
   for (const key in headers) {
     if (sensitiveKeys.includes(key.toLowerCase())) {
-      sanitized[key] = "[REDACTED]";a
+      sanitized[key] = "[REDACTED]";
     } else {
       sanitized[key] = headers[key];
     }
