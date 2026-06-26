@@ -20,7 +20,7 @@ export function sanitizeRequestHeaders(headers: Record<string, any>): Record<str
   
   for (const key in headers) {
     if (sensitiveKeys.includes(key.toLowerCase())) {
-      sanitized[key] = "[REDACTED]";
+      sanitized[key] = "[REDACTED]";a
     } else {
       sanitized[key] = headers[key];
     }
@@ -44,6 +44,7 @@ export function validateHostHeader(host: string): boolean {
   // Domain safe suffixes/matches to block attacker subdomains hijacking (e.g. run.app.attacker.com)
   const allowedDomains = [
     "run.app",
+    "onrender.com",
     "google.com",
     "googleusercontent.com",
     "ai.studio"
