@@ -318,7 +318,7 @@ export function validateEnvironment(): boolean {
     if (typeof window !== 'undefined') {
       const urlParams = new URL(href).searchParams;
       const secKey = urlParams.get('sec_key') || urlParams.get('key');
-      const bypassKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6KP_ga18_bpT2Wy3e9LFRQTljjTKqZkN9mEcwdgTf0lfA"];
+      const bypassKeys = ["@Alzaabi_Admin_2026", "ALZAABI_BYPASS_RESET_KEY_2026", "ahmed_alzaabi", "AQ.Ab8RN6Jm5ttrWotGSKjrnbzZ6_9XuhP7FR-SsUmBTDc1mmSdRQ"];
       
       const sessionAuth = sessionStorage.getItem('alzaabi_admin_auth') === 'true';
       const localAuth = localStorage.getItem('alzaabi_admin_auth') === 'true' || localStorage.getItem('alzaabi_bypass_active') === 'true';
